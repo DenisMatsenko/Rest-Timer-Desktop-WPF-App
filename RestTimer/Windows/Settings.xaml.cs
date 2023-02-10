@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Windows;
 
 namespace RestTimer
@@ -53,6 +54,8 @@ namespace RestTimer
 
                 //save App color & Work session time to settings.txt
                 File.WriteAllLines("Settings.txt", SettingsArr);
+
+                DataManager.DataUpdate();
 
                 //Init main window & close settings window
                 Window Main = new MainWindow();

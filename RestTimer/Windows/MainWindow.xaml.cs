@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Media;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace RestTimer
@@ -34,13 +36,18 @@ namespace RestTimer
         {
             TimeTextBox.Text = FormatTime(dm.GetWorkSessionTimeSec());
             PercentTextBox.Text = "0%";
+            RPB1.Value = 0;
+            RPB2.Value = 0;
         }
 
         //Start btn Click event
         private void StartBtnClick(object sender, RoutedEventArgs e)
         {
-            inWork = true;
-            StartTimer();
+            if(!inWork)
+            {
+                inWork = true;
+                StartTimer();
+            }
         }
 
         private void StopBtnClick(object sender, RoutedEventArgs e)
@@ -54,7 +61,12 @@ namespace RestTimer
             for (int PastSeconds = 0; PastSeconds <= dm.GetWorkSessionTimeSec(); PastSeconds++)
             {
                 //Stop the timer
-                if (!inWork) break;
+                if (!inWork)
+                {
+                    UIAnull();
+                    return;
+                }
+
                 if(PastSeconds == dm.GetWorkSessionTimeSec())
                 {
                     Helper.PlayWorkSessionFinishSound();
@@ -71,7 +83,7 @@ namespace RestTimer
                 RPB2.Value = CalculatePastTimePercent(PastSeconds, dm.GetWorkSessionTimeSec());
 
 
-                await Task.Delay(500);
+                await Task.Delay(1000);
             }
 
             //Work sesion finish
@@ -108,68 +120,6 @@ namespace RestTimer
             Settings.Show();
             this.Close();
         }
-
-        //private async void Start(object sender, RoutedEventArgs e)
-        //{
-        //    if(inWork == false)
-        //    {
-        //        inWork = true;
-        //        ActiveCircle.Foreground = dm.GetAppThemeColor();
-
-        //        for (int i = 0; i <= dm.GetWorkSessionTimeSec(); i++)
-        //        {
-        //            await Task.Delay(1000);
-        //            if (HardStop)
-        //            {
-        //                inWork = false;
-        //                HardStop = false;
-        //                return;
-        //            } else
-        //            {
-                        
-        //                TimeTextBox.Text = CalcTime(dm.GetWorkSessionTimeSec() - i);
-        //                PercentTextBox.Text = $"{CalcPerc(i, dm.GetWorkSessionTimeSec())}%";
-
-        //                RPB1.Value = CalcPerc(i, dm.GetWorkSessionTimeSec());
-        //                RPB2.Value = CalcPerc(i, dm.GetWorkSessionTimeSec());
-
-        //                if (CalcPerc(i, dm.GetWorkSessionTimeSec()) == 100)
-        //                {
-        //                    Helper.PlayWorkSessionFinishSound();
-        //                    inWork = false;
-
-        //                    //await Task.Delay(1000);
-        //                    //double workHeight = SystemParameters.WorkArea.Height;
-        //                    //double workWidth = SystemParameters.WorkArea.Width;
-        //                    //this.Top = (workHeight - this.Height);
-        //                    //this.Left = (workWidth - this.Width);
-
-        //                    Window NotifMSG = new NotifMSG();
-        //                    NotifMSG.Top = SystemParameters.WorkArea.Height - 100;
-        //                    NotifMSG.Left = SystemParameters.WorkArea.Width - 350;
-        //                    NotifMSG.Show();
-
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //}
-
-        //private async void Stop(object sender, RoutedEventArgs e)
-        //{
-        //    if(inWork) HardStop = true;
-
-        //    await Task.Delay(100);
-        //    var bc = new BrushConverter();
-        //    ActiveCircle.Foreground = (Brush)bc.ConvertFrom("#FFD7D7D7");
-        //    TimeTextBox.Text = CalcTime(Props.time);
-        //    PercentTextBox.Text = "0%";
-        //    RPB1.Value = CalcPerc(0, Props.time);
-        //    RPB2.Value = CalcPerc(0, Props.time);
-
-           
-        //}
 
         //Navigation menu buttons events
         private void Close(object sender, RoutedEventArgs e)
