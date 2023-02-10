@@ -1,0 +1,55 @@
+﻿<Window x:Class="RestTimer.MainWindow"
+        x:Name="myWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestTimer" xmlns:xrpb="http://XamlRadialProgressBar/DotNet"
+        mc:Ignorable="d"
+        
+        Title="RestTimer" Height="400" Width="300" AllowsTransparency="True" WindowStyle="None"                                                           Background="{x:Null}" Foreground="{x:Null}">
+    <Border x:Name="BorderMain" BorderBrush="#5877E8" BorderThickness="2" Height="400" Width="300" CornerRadius="20" Background="White" MouseLeftButtonDown="PnMouseDown" MouseLeftButtonUp="PnMouseUp" MouseMove="PnMouseMove">
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="7*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="RestText" FontWeight="Medium" Text="Rest" FontSize="30" Margin="10 0 0 5" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Foreground="#5877E8" />
+            <TextBlock FontWeight="Medium" Text="Timer" FontSize="30" Margin="69 0 0 5" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="Black"/>
+            <Ellipse Grid.Row="0" MouseLeftButtonUp="Close" ButtonBase.Click="Close" Width="30" Height="30" Margin="0,9,10,10.6" VerticalAlignment="Center" HorizontalAlignment="Right" Fill="#FFD9D9D9"/>
+            <Ellipse Grid.Row="0" MouseLeftButtonUp="Hide" ButtonBase.Click="Hide" Width="30" Height="30" Margin="0,9,46,10.6" VerticalAlignment="Center" HorizontalAlignment="Right" Fill="#FFD9D9D9"/>
+
+            <xrpb:RadialProgressBar Panel.ZIndex="9" Grid.Row="1" Value="100" Height="210" Width="210" Margin="0 20 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="#FFD7D7D7"/>
+            <xrpb:RadialProgressBar x:Name="ActiveCircle" Panel.ZIndex="8" Grid.Row="1" Value="100" Height="200" Width="200" Margin="0 25 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="#FFD7D7D7"/>
+            <xrpb:RadialProgressBar x:Name="RPB1" Panel.ZIndex="10" Grid.Row="1" Value="0" Height="210" Width="210" Margin="0 20 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="#5877E8"/>
+            <xrpb:RadialProgressBar x:Name="RPB2" Panel.ZIndex="10" Grid.Row="1" Value="0" Height="200" Width="200" Margin="0 25 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="#5877E8"/>
+
+            <TextBlock MouseLeftButtonUp="Hide" Text="-" FontSize="60" HorizontalAlignment="Right" Margin="0,-24,49.8,18.6" Foreground="Gray"/>
+            <TextBlock MouseLeftButtonUp="Close" Text="+" FontSize="40" FontWeight="Medium" HorizontalAlignment="Right" Margin="0,-7,7.8,10.6" Foreground="Gray" RenderTransformOrigin="0.5,0.5">
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="43.624"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            </TextBlock>
+
+            <TextBlock x:Name="TimeTextBox" FontSize="46"  Text="45:00" Panel.ZIndex="20" Margin="0 80 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="1" Foreground="Black"/>
+            <TextBlock x:Name="PercentTextBox" FontSize="30"  Text="100%" Panel.ZIndex="20" Margin="0 130 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="1" Foreground="Black"/>
+            <Ellipse MouseLeftButtonUp="OpenSettings" Margin="0 110 10 0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="30" Height="30" Fill="#FFD9D9D9" Grid.Row="1"/>
+
+            <Grid Grid.Row="1" Margin="0 0 0 37" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <Border x:Name="StartBTN" MouseLeftButtonUp="StartBtnClick" Width="60" Height="60" Margin="0 0 95 0" Background="#5877E8" CornerRadius="15">
+                    <Polygon Margin="5 1 0 0" Points="0,0 25,13, 0,25" Width="26" Height="26" Fill="White" />
+                </Border>
+                <Border x:Name="StopBTN" MouseLeftButtonUp="StopBtnClick" Width="60" Height="60" Margin="90 0 0 0" Background="#5877E8" CornerRadius="15">
+                    <Border CornerRadius="5" Background="White" Width="25" Height="25"/>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
